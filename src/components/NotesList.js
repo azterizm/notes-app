@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export const NotesList = () => {
-  const notes = useSelector((state) => state.notes);
+  const notes = useSelector((state) => state.notes.entities);
+  console.log(notes);
   const renderedNotes = notes.map((note) => {
     return (
       <h5 key={note.id}>

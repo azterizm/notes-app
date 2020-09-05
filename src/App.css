@@ -6,7 +6,7 @@
   justify-content: center;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke: 0.4892px;
+  -webkit-text-stroke: 0.5px;
 }
 
 #content {
@@ -26,6 +26,12 @@ a {
   padding: 1rem 3rem;
   display: block;
   border-radius: 30px;
+  background-color: #fff;
+  transition: background-color 0.7s ease;
+}
+
+button {
+  transition: background-color 0.5s ease;
 }
 
 h5 {
@@ -50,7 +56,7 @@ article a {
 
 a:hover,
 button:hover {
-  background-color: #f1f1f1;
+  background-color: #e0e0e0;
 }
 
 #deleteBtn {
@@ -71,9 +77,15 @@ textarea {
   margin-bottom: 20px;
   border-radius: 30px;
   border: 1.5px solid black;
+  transition: border-radius 0.5s ease;
 }
 
 input:focus,
 textarea:focus {
-  border: none;
+  border-radius: 0;
+}
+
+textarea {
+  overflow-y: hidden;
+  overflow-x: hidden;
 }

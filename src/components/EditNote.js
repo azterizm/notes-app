@@ -6,7 +6,9 @@ import { noteUpdated } from '../slices/notesSlice';
 
 export const EditNote = () => {
   const { noteId } = useParams();
-  const note = useSelector((state) => state.notes.find((note) => note.id === noteId));
+  const note = useSelector((state) =>
+    state.notes.entities.find((note) => note.id === noteId)
+  );
   const dispatch = useDispatch();
   const history = useHistory();
 

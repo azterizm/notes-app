@@ -13,10 +13,12 @@ export const AddNote = () => {
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    dispatch(noteAdded(title, content));
-    setTitle('');
-    setContent('');
-    titleRef.current.focus();
+    if (title && content) {
+      dispatch(noteAdded(title, content));
+      setTitle('');
+      setContent('');
+      titleRef.current.focus();
+    }
   };
 
   const handleReturn = (e) => {

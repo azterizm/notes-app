@@ -5,7 +5,7 @@ import { noteDeleted } from '../slices/notesSlice';
 
 export const Note = () => {
   const { noteId } = useParams();
-  const notes = useSelector((state) => state.notes);
+  const notes = useSelector((state) => state.notes.entities);
   const note = notes.find((note) => note.id === noteId);
   const dispatch = useDispatch();
   const history = useHistory();

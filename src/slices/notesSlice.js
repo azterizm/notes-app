@@ -1,12 +1,20 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 
-const initialState = [
-  {
-    id: '1',
-    title: 'Get things done',
-    content: 'Gotta go to the grocery store',
-  },
-];
+const notesAdapater = createEntityAdapter({
+  sortComparer: (a, b) => a.title.localeCompare(b.title),
+});
+
+const initialState = notesAdapater.getInitialState({
+  entities: [{ id: '1', title: 'title', content: 'content' }],
+});
+
+// const initialState = [
+//   {
+//     id: '1',
+//     title: 'Get things done',
+//     content: 'Gotta go to the grocery store',
+//   },
+// ];
 
 const notesSlice = createSlice({
   name: 'notes',
@@ -14,7 +22,7 @@ const notesSlice = createSlice({
   reducers: {
     noteAdded: {
       reducer: (state, action) => {
-        state.push(action.payload);
+        state.entities.push(action.payload);
       },
       prepare: (title, content) => {
         return {
@@ -28,7 +36,7 @@ const notesSlice = createSlice({
     },
     noteUpdated: (state, action) => {
       const { id, title, content } = action.payload;
-      const note = state.find((note) => note.id === id);
+      const note = state.entities.find((note) => note.id === id);
       if (note) {
         note.title = title;
         note.content = content;
@@ -36,8 +44,8 @@ const notesSlice = createSlice({
     },
     noteDeleted: (state, action) => {
       const { id } = action.payload;
-      const index = state.map((note) => note.id).indexOf(id);
-      state.splice(index, 1);
+      const index = state.entities.map((note) => note.id).indexOf(id);
+      state.entities.splice(index, 1);
     },
   },
 });
