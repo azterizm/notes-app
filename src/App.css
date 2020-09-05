@@ -54,6 +54,7 @@ button:hover {
 
 #deleteBtn {
   padding: 15px 20px;
+  border: none;
   border-radius: 30px;
   font-family: Montserrat;
   background-color: #ff000042;
@@ -63,7 +64,14 @@ label {
   padding-right: 10px;
 }
 
-input {
+input,
+textarea {
   padding: 10px 20px;
   margin-bottom: 20px;
+  border-radius: 30px;
+}
+
+input:focus,
+textarea:focus {
+  border: none;
 }
