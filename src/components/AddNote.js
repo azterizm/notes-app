@@ -50,9 +50,10 @@ export const AddNote = () => {
         id="contentInput"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        onKeyDown={handleReturn}
         cols="30"
         rows="10"
-        onKeyDown={handleReturn}
+        style={{ marginTop: '10px' }}
       />
 
       <br />

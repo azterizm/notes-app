@@ -14,15 +14,7 @@ const App = () => {
       </div>
       <div id="content">
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <main>
-                <AddNote />
-              </main>
-            )}
-          />
+          <Route exact path="/" render={() => <AddNote />} />
           <Route exact path="/notes/:noteId" component={Note} />
           <Redirect from="/notes" to="/" />
           <Route exact path="/editnote/:noteId" component={EditNote} />
