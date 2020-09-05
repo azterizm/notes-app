@@ -24,12 +24,16 @@ export const Note = () => {
   };
 
   return (
-    <article>
-      <h2>{note.title}</h2>
-      <p>{note.content}</p>
-      <Link to={`/editnote/${note.id}`}>Edit Note</Link>
-      <br />
-      <button onClick={handleDelete}>Delete</button>
-    </article>
+    <>
+      <article>
+        <h2>{note.title}</h2>
+        <p>{note.content}</p>
+        <Link to={`/editnote/${note.id}`}>Edit Note</Link>
+        <br />
+        <button id="deleteBtn" onClick={handleDelete}>
+          Delete
+        </button>
+      </article>
+    </>
   );
 };

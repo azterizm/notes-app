@@ -12,5 +12,12 @@ export const NotesList = () => {
     );
   });
 
-  return <div className="notesList">{renderedNotes}</div>;
+  return (
+    <div className="notesList">
+      {renderedNotes}
+      <Link id="addButton" to="/">
+        +
+      </Link>
+    </div>
+  );
 };
