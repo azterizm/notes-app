@@ -82,6 +82,7 @@ textarea {
 
 input:focus,
 textarea:focus {
+  outline: none;
   border-radius: 0;
 }
 

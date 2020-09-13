@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { noteUpdated } from '../slices/notesSlice';
+import { fetchNoteById } from '../slices/manageNotes';
 
 export const EditNote = () => {
   const { noteId } = useParams();
-  const note = useSelector((state) =>
-    state.notes.entities.find((note) => note.id === noteId)
-  );
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [title, setTitle] = useState(note.title);
-  const [content, setContent] = useState(note.content);
+  const [getNoteId, setNoteId] = useState([]);
+  const note = getNoteId[0] ? getNoteId[0] : '';
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      // setNoteId(await fetchNoteById(noteId));
+      const data = await fetchNoteById(noteId);
+      setNoteId(data);
+      setTitle(data[0].title);
+      setContent(data[0].content);
+    })();
+  }, [noteId]);
 
   const handleEdit = () => {
     dispatch(noteUpdated({ id: noteId, title, content }));
-    history.push(`/notes/${noteId}`);
+    history.push('/notes');
   };
+
+  if (!note) {
+    return (
+      <div className="editNote">
+        <h2>Loading..</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="editNote">
@@ -26,7 +44,6 @@ export const EditNote = () => {
 
       <label htmlFor="title">Title: </label>
       <input
-        type="text"
         name="title"
         id="titleInput"
         value={title}
@@ -38,7 +55,6 @@ export const EditNote = () => {
       <label htmlFor="content">Content: </label>
       <br />
       <textarea
-        type="text"
         name="content"
         id="contentInput"
         value={content}

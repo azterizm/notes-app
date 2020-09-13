@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { noteDeleted } from '../slices/notesSlice';
+import { fetchNoteById } from './../slices/manageNotes';
 
 export const Note = () => {
   const { noteId } = useParams();
-  const notes = useSelector((state) => state.notes.entities);
-  const note = notes.find((note) => note.id === noteId);
+  const [notesIds, setNotesIds] = useState([]);
+  const note = notesIds[0] ? notesIds[0] : 'Loading..';
   const dispatch = useDispatch();
   const history = useHistory();
 
-  if (!note) {
+  useEffect(() => {
+    (async () => {
+      setNotesIds(await fetchNoteById(noteId));
+    })();
+  }, [noteId]);
+
+  if (noteId !== note.id) {
     return (
       <article>
-        <h2>Post not found!</h2>
+        <h2>Loading..</h2>
       </article>
     );
   }
 
   const handleDelete = () => {
-    dispatch(noteDeleted({ id: noteId }));
+    dispatch(noteDeleted(noteId));
     history.push('/');
   };
 

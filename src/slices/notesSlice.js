@@ -1,20 +1,14 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
+import { addNote, deleteNoteById, updateNoteById } from './manageNotes';
 
 const notesAdapater = createEntityAdapter({
   sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = notesAdapater.getInitialState({
-  entities: [{ id: '1', title: 'title', content: 'content' }],
+  entities: [],
+  noteDeleted: false,
 });
-
-// const initialState = [
-//   {
-//     id: '1',
-//     title: 'Get things done',
-//     content: 'Gotta go to the grocery store',
-//   },
-// ];
 
 const notesSlice = createSlice({
   name: 'notes',
@@ -22,6 +16,7 @@ const notesSlice = createSlice({
   reducers: {
     noteAdded: {
       reducer: (state, action) => {
+        addNote(action.payload);
         state.entities.push(action.payload);
       },
       prepare: (title, content) => {
@@ -36,16 +31,12 @@ const notesSlice = createSlice({
     },
     noteUpdated: (state, action) => {
       const { id, title, content } = action.payload;
-      const note = state.entities.find((note) => note.id === id);
-      if (note) {
-        note.title = title;
-        note.content = content;
-      }
+      updateNoteById(id, title, content);
+      state.noteDeleted = !state.noteDeleted;
     },
     noteDeleted: (state, action) => {
-      const { id } = action.payload;
-      const index = state.entities.map((note) => note.id).indexOf(id);
-      state.entities.splice(index, 1);
+      deleteNoteById(action.payload);
+      state.noteDeleted = !state.noteDeleted;
     },
   },
 });
